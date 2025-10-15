@@ -4,6 +4,8 @@
 from collections import Counter
 
 #idea: we starte traversing S, we know the number of chars is needed for T,
+#we keep a dictionary from the nu of chars in string T
+# we start traversing S and updating the nu of chars we have seen so far in the S
 # as soon as we met all the needed chars, we have found the first window, we save the start and end and keep going
 
 class Solution(object):

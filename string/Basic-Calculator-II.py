@@ -3,8 +3,52 @@
 #The expression string contains only non-negative integers, +, -, *, / operators and empty spaces . The integer division should truncate toward zero.
 
 
-#point ************ if the operators are only + or - it should be done from left to reight necessarily
+#idea is that before processing the number we save its sign (pos or neg)
+# for the first number we keep sign positive by default
+#if we see + or - we append  positive or negative number to the stack
+# if we see * or / we pop the last number from stack and do the peration and append the results
+# finally we add all the remaining numbers in the stack
 class Solution(object):
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        s = s.replace(" ", "")
+        stack = []
+        num = 0
+        sign = '+'
+        i = 0
+
+        while i < len(s):
+            ch = s[i]
+
+            if ch.isdigit():
+                num = num * 10 + int(ch)
+
+            if ch in '+-*/' or i == len(s) - 1:
+                if sign == '+':
+                    stack.append(num)
+                elif sign == '-':
+                    stack.append(-num)
+                elif sign == '*':
+                    stack.append(stack.pop() * num)
+                elif sign == '/':
+                    prev = stack.pop()
+                    stack.append(int(prev / num))  # Truncate toward zero
+
+                sign = ch
+                num = 0
+
+            i += 1
+
+        # Manually sum the stack
+        result = 0
+        for val in stack:
+            result += val
+
+        return result
+class Solution2(object):
 
     def calculate(self, s):#if + or - we add to stack; if * or / we shoudl pop from stack, calculate and push it again
         """
@@ -62,6 +106,5 @@ class Solution(object):
 s=Solution()
 input="3-2*2"
 #input="1-1+1"
-input="1+1-1"
-
-s.calculate(input)
+input="14-3/2"
+print(s.calculate(input))

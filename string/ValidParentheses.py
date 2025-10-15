@@ -1,47 +1,16 @@
+#Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+#An input string is valid if:
+
+#Open brackets must be closed by the same type of brackets.
+#Open brackets must be closed in the correct order.
+#Every close bracket has a corresponding open bracket of the same type.
+
+
+#the idea is that we push the open paranthesis in the stack
+#and when we see a closed one , we pop from the stack, the poped one and the closed one should be from the same type
 class Solution(object):
-    def isValid(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
-
-        stack = []
-
-        for c in s:
-            if (c == "["):
-                stack.append("[")
-            elif (c == "]"):
-                if (len(stack) == 0):
-                    return False
-                elif (stack[-1] == "["):
-                    del stack[-1]
-                else:
-                    return False
-            elif (c == "{"):
-                stack.append("{")
-            elif (c == "}"):
-                if (len(stack) == 0):
-                    return False
-                elif (stack[-1] == "{"):
-                    del stack[-1]
-                else:
-                    return False
-            elif (c == "("):
-                stack.append("(")
-            else:
-                if (len(stack) == 0):
-                    return False
-                elif (stack[-1] == "("):
-                    del stack[-1]
-                else:
-                    return False
-        if (len(stack) == 0):
-            return True
-        else:
-            return False
-
-
-    def isValid2(self, s):# A very clean code
+    def isValid(self, s):# A very clean code
         stack = []
         d={")":"(","}":"{","]":"["}
         for c in s:

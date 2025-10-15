@@ -11,7 +11,7 @@ class Solution(object):
         l=0
         r=len(wo)
         while(l<r):
-            m=(l+r)/2
+            m=(l+r)//2
             if wo[m]>=t:
                 r=m
             else:
@@ -34,14 +34,14 @@ class Solution(object):
         for q in queries:
             n = Counter(q)[min(q)]
             #count =len(wo)-bisect.bisect(wo,n)
-            count =len(wo)-self.binary(wo,n+1)
+            count =len(wo)-self.binary(wo,n+1)#point is that we are looking for n+1, so in binary search if there are duplicates of n+1 we should find the left most index of that
             ans.append(count)
         return ans
 
 
 so=Solution()
 queries = ["bbb","cc"]
-words = ["a","aa","aaa","aaaa"]
+words = ["a","aa","ccc","bbb","aaa","aaaa"]
 print(so.numSmallerByFrequency(queries,words))
 
 #2025

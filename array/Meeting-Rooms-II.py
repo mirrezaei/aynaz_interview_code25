@@ -6,7 +6,7 @@ class Solution(object):# O(n log n)
     #sort only beginning and add the end time in a heap
     #if the start of the next time is greater than the min of the heap, pop the heap and insert the new end
     # if the start of the next time is less than the min of the heap, inster the new end end to the heap. it means we need one more room
-    #len of heapq at each moment shows the maximum number of rooms we need so far (although the reamin end times in the queue may not be the representative of really rooms needed simultaneously)
+    #len of heapq at each moment shows the maximum number of rooms we need so far (not necessarily the nu of rooms at this moment, it is the number of rooms needed simultaneously SO FAR)
     def minMeetingRooms(self, intervals):
         """
         :type intervals: List[List[int]]

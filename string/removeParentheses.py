@@ -11,73 +11,57 @@
 
 import sys
 import collections
+from collections import deque
 class Solution(object):
-
-    def validity(self, s):
-
-        counter=0
-        for i in range(len(s)):
-            if (s[i] == "("):
-                counter+=1
-            elif (s[i] == ")"):
-                if (counter < 0):
-                    return False
-                elif (counter>0):
-                    counter-=1
-                else:
-                    return False
-
-        if(counter>0):
-            return False
-
-        return True
-
-    def traverse(self, q, out):
-        seen={}
-        level = 100000# maximum number of paranthesis removalss
-        while (len(q) > 0):
-            s = q[0][0]#current string
-            l = q[0][1]#nu of removals
-            if (l > level):
-                break
-            del q[0]
-            val = self.validity(s)
-            if (val == True):
-                level = l
-                out.add(s)
-            else:
-                l_child=0
-                r_child=0
-                for i in range(len(s)):#at each time, remove one of the paranthesis
-                    tem = list(s)
-                    if(tem[i] == "(" or tem[i] == ")"):
-                        a=tem[i]
-                        if (r_child > l_child  ):#THIs is very important ********************************************n(if coles paranthesis is more than open paranthesis) __> wrong, don't continue
-                            break
-                        cur=tem[i]
-                        del tem[i]
-                        tem = ''.join(tem)
-                        if(tem not in seen.keys()):#if we have reviewed this strig or not
-                            q.append((tem, l + 1))
-                            seen[tem]=0
-                        if (cur == '('):
-                            l_child+=1
-                        else:
-                            r_child+=1
-        print(out)
-        return out
 
     def removeInvalidParentheses(self, s):
         """
         :type s: str
         :rtype: List[str]
         """
-        d = {}
-        d[1] = False
-        out = set()
-        q = [(s, 0)]
-        self.traverse(q, out)
-        return out
+
+        def is_valid(expr):
+            count = 0
+            for ch in expr:
+                if ch == '(':
+                    count += 1
+                elif ch == ')':
+                    count -= 1
+                    if count < 0:
+                        return False
+            return count == 0
+
+        visited = set()
+        queue = deque([s])# af first queue only has one element, which is the entire string
+        found = False
+        result = []
+
+        while queue:
+            level_size = len(queue)# nu of elems in the queue defines how many string in that level we need to validate
+            level_seen = set()
+            for _ in range(level_size):
+                expr = queue.popleft()
+                if expr in visited:
+                    continue
+                visited.add(expr)
+
+                if is_valid(expr):
+                    result.append(expr)
+                    found = True
+
+                if not found:
+                    for i in range(len(expr)):# remove each char of the string and add it to the queue and
+                        if expr[i] not in ('(', ')'):
+                            continue
+                        new_expr = expr[:i] + expr[i + 1:]
+                        if new_expr not in visited and new_expr not in level_seen:
+                            queue.append(new_expr)
+                            level_seen.add(new_expr)
+
+            if found:
+                break
+
+        return result
 
 so=Solution()
 ss=")((())((())(((f)()("

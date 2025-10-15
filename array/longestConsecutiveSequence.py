@@ -9,7 +9,7 @@ class Solution:
     # @return an integer
 
     #O(n log n)
-    def longestConsecutive(self, nums):#BEST APPROACH
+    def longestConsecutive(self, nums): #O(n logn)
 
         n = len(nums)
 
@@ -34,7 +34,7 @@ class Solution:
     # idea: first we addd all the elements in a set, then for each elemnt we check if there is smaller than that or not
     # if there is something smaller, then we move on (ONLY SMALLER)
     # if not we start countinghow many consecutive larger elements exists
-    def longestConsecutive(self, A):
+    def longestConsecutive(self, A): #BEST APPROACH O(n)
         s=set()
         maxLen=0
         for elem in A:

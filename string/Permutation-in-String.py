@@ -9,38 +9,28 @@ class Solution(object):
         :type s2: str
         :rtype: bool
         """
-        d_s1 = Counter(s1)
-        i = 0#pointer to end of window in s2
-        count = len(s1)# the number of chars that need to be supported until the end of the sliding window
-        start=0#start of the window in s2
-        while (i < len(s2)):
-            if(i-start==len(s1)-1):# len of sliding window is exactly s1
-                    d_s1[s2[i]] -= 1
-                    if (d_s1[s2[i]] >= 0):
-                        count -= 1
-                        if (count == 0):
-                            return True
-                    d_s1[s2[start]] += 1#shift the start one char to forward
-                    if (d_s1[s2[start]] > 0):
-                        count += 1
-                    start += 1
-                    i+=1
-            else:#len of sliding window is less than len(s1). Try to increase the len
-                if(s2[i] not in d_s1):#if the current char does not exist in s1, then start a new window
-                    j=start
-                    i+=1
-                    while(j<i):#shift the start to the end of current window
-                        if(s2[j] in d_s1):
-                            d_s1[s2[j]]+=1
-                            if(d_s1[s2[j]]>0):
-                                count+=1
-                        j+=1
-                    start=j
-                else:#only increase the end of the window
-                    d_s1[s2[i]] -= 1
-                    if(d_s1[s2[i]]>=0):
-                        count-=1
-                    i+=1
+        if len(s1) > len(s2):
+            return False
+
+        s1_count = Counter(s1)
+        window_count = Counter(s2[:len(s1)])
+
+        if s1_count == window_count:
+            return True
+
+        for i in range(len(s1), len(s2)):
+            start_char = s2[i - len(s1)]
+            end_char = s2[i]
+
+            window_count[end_char] += 1
+            window_count[start_char] -= 1
+
+            if window_count[start_char] == 0:
+                del window_count[start_char]
+
+            if window_count == s1_count:
+                return True
+
         return False
 
 s1="adc"

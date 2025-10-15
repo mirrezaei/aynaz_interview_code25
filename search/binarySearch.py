@@ -4,6 +4,9 @@ a=[1,2,2,3,3,3,3,3,4,5]
 #a=[1,2,3,4]
 a=[3,6,8,8,12]
 
+#when r=len(ar) --> then l<r
+#when r=len(ar)-1 --> then l<=r
+
 def searchRange( nums, target):# for left searcch
 
         #Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.

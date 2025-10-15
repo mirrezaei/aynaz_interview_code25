@@ -18,44 +18,36 @@
 #it is the binary search with the only difference that in binary search we usually compare with the middle element only. However, in this binary search we need to compare with the left or right element as well
 
 class Solution(object):
-
     def search(self, nums, target):
         """
         :type nums: List[int]
         :type target: int
         :rtype: int
         """
+        left, right = 0, len(nums) - 1
 
-        def biSearch(i, j):
-            if i <= j:
-                m = (i + j) / 2
-                if nums[m] == target:
-                    return m
+        while left <= right:
+            mid = (left + right) // 2
+
+            if nums[mid] == target:
+                return mid
+
+            # Left half is sorted
+            if nums[left] <= nums[mid]:
+                if nums[left] <= target < nums[mid]:
+                    right = mid - 1  # Search left
                 else:
-                    right = False
-                    left = False
-                    if m + 1 < len(nums) and nums[m + 1] <= nums[j]:
-                        right = True
-                    if m - 1 > -1 and nums[i] <= nums[m - 1]:
-                        left = True
-                    if right:
-                        if target >= nums[m + 1] and target <= nums[j]:
-                            return biSearch(m + 1, j)
-                        else:
-                            return biSearch(i, m - 1)
-                    elif left:
-                        if target >= nums[i] and target <= nums[m - 1]:
-                            return biSearch(i, m - 1)
-                        else:
-                            return biSearch(m + 1, j)
-                    else:
-                        return -1
+                    left = mid + 1   # Search right
+            # Right half is sorted
             else:
-                return -1
+                if nums[mid] < target <= nums[right]:
+                    left = mid + 1   # Search right
+                else:
+                    right = mid - 1  # Search left
 
-        if len(nums) == 0:
-            return -1
-        return (biSearch(0, len(nums) - 1))
+        return -1
+
+
 
 
 s=Solution()

@@ -6,6 +6,8 @@
 # the only option is to use the Rabin-Karp hash
 
 #solution:
+# the idea is that we start with a binary search to find the maximum  duplicate length availble
+# and in order to find duplicates, we use rabin-karp hashing method. starting with a substring length c and rty to add chars to the right of that and removing from its left
 #using a binary search we start to looking for duplicate substrings
 # the first try we we look for substring with length half of the entire string
 # if there is something duplicate, then we only look for duplicates with length more than c

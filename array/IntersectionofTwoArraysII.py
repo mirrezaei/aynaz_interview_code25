@@ -23,3 +23,7 @@ class Solution(object):
         return out
 
 #2025
+nums1=[1,4,7,8]
+nums2=[4,5,1,3]
+s=Solution()
+print(s.intersect(nums1,nums2))
